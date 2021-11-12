@@ -1,16 +1,24 @@
 [tool.poetry]
-name = "jouresearch-nlp"
+name = "jouresearch_nlp"
 version = "0.1.0"
 description = ""
 authors = ["Felix Mertineit <felix.mertineit@aureka.ai>"]
+
+packages = [
+    { include = "jouresearch_nlp" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
 spacy = "^3.2.0"
 pydantic = "^1.8.2"
+wordcloud = "^1.8.1"
+Pillow = "^8.4.0"
+multidict = "^5.2.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
+jupyterlab = "^3.2.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
