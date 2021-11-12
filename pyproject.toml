@@ -6,6 +6,8 @@ authors = ["Felix Mertineit <felix.mertineit@aureka.ai>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
+spacy = "^3.2.0"
+pydantic = "^1.8.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
