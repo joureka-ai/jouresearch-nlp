@@ -9,10 +9,10 @@ from jouresearch_nlp.utils.parser import wc_parser
 
 from spacy.tokens import Token
 
+
 def get_freq_dict(text: List[Token]) -> MultiDict:
-    """Takes a list of spacy tokens and returns a dictionary containing the frequencies.
-    """
-    
+    """Takes a list of spacy tokens and returns a dictionary containing the frequencies."""
+
     freq_dict = MultiDict()
     tmpDict = {}
 
@@ -22,7 +22,7 @@ def get_freq_dict(text: List[Token]) -> MultiDict:
         if word.is_stop:
             if not word.is_punct:
                 continue
-        
+
         val = tmpDict.get(lemma(word), 0)
         tmpDict[lemma(word)] = val + 1
 
@@ -32,7 +32,8 @@ def get_freq_dict(text: List[Token]) -> MultiDict:
 
     return freq_dict
 
-def get_wordcloud_layout(freq_dict: MultiDict, num_words = 100) -> WordCloudS:
+
+def get_wordcloud_layout(freq_dict: MultiDict, num_words=100) -> WordCloudS:
 
     wc = WordCloud(background_color="white", max_words=num_words)
 

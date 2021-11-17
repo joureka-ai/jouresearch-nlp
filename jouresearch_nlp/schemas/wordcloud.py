@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import List, Tuple, Optional 
+from typing import List, Tuple, Optional
+
 
 class Word(BaseModel):
     word: str
@@ -8,6 +9,7 @@ class Word(BaseModel):
     position: Tuple[int, int]
     orientation: int = None
     color: str
+
 
 class WordCloudS(BaseModel):
     words: List[Word]
