@@ -11,17 +11,19 @@ from spacy.tokens import Token
 
 
 def get_freq_dict(text: List[Token]) -> MultiDict:
-    """Takes a list of spacy tokens and returns a dictionary containing the frequencies."""
+    """Takes a list of spacy tokens of one document and returns a dictionary containing the frequencies."""
 
     freq_dict = MultiDict()
     tmpDict = {}
 
-    # making dict for counting frequencies
     for word in text:
         # Stop_words
         if word.is_stop:
             if not word.is_punct:
                 continue
+        # Don't take punctuation into account
+        if word.is_punct:
+            continue
 
         val = tmpDict.get(lemma(word), 0)
         tmpDict[lemma(word)] = val + 1
@@ -34,7 +36,7 @@ def get_freq_dict(text: List[Token]) -> MultiDict:
 
 
 def get_wordcloud_layout(freq_dict: MultiDict, num_words=100) -> WordCloudS:
-
+    """ Generate a wordcloud layout based on the freq_dict coming from the """
     wc = WordCloud(background_color="white", max_words=num_words)
 
     wc.generate_from_frequencies(freq_dict)
