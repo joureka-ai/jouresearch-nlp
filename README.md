@@ -1,7 +1,5 @@
 # jouresearch-nlp
 
-This
-
 ### Table of Contents
 
 1. [Generation of WordCloud](#generation-of-wordcloud)
@@ -43,7 +41,7 @@ freq_list = calculate_freq_over_docs(docs=docs, wc_threshold=50)
 freq_list
 ```
 
-The out put format is like this:
+The output format is like this:
 
 ```python
 [{'word': 'wertvoll', 'frequency': 24, 'doc_id': [5, 8]},
