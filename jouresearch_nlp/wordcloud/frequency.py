@@ -15,7 +15,7 @@ def add_freq_over_docs(
 
     if not freq_dict:
         freq_dict = {}
-    tmpDict = {}
+    tmp_dict = {}
 
     # making dict for counting frequencies
     for word in text:
@@ -27,20 +27,22 @@ def add_freq_over_docs(
         if word.is_punct:
             continue
 
-        val = tmpDict.get(lemma(word), 0)
-        tmpDict[lemma(word)] = val + 1
+        # TODO: change to snake case
+        val = tmp_dict.get(lemma(word), 0)
+        tmp_dict[lemma(word)] = val + 1
 
     # add the amount of words for each word
-    for key in tmpDict:
+    for key in tmp_dict:
+
         if key in freq_dict:
             # Check if the word is already in the freq_dict and add the frequency
-            freq_dict[key]["frequency"] = freq_dict[key]["frequency"] + tmpDict[key]
+            freq_dict[key]["frequency"] = freq_dict[key]["frequency"] + tmp_dict[key]
             freq_dict[key]["doc_id"].append(doc_id)
 
         else:
             freq_dict[key] = {
                 "word": key,
-                "frequency": tmpDict[key],
+                "frequency": tmp_dict[key],
                 "doc_id": [doc_id],
             }
 
