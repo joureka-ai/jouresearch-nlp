@@ -75,7 +75,7 @@ def sort_frequencies(freq_dict: dict, wc_threshold: int) -> List:
 
     number_word_freq = len(sort_freq_list)
 
-    if number_word_freq < wc_threshold:
+    if number_word_freq > wc_threshold:
         sort_freq_list = sort_freq_list[:wc_threshold]
 
     return sort_freq_list
