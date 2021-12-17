@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Tuple, Optional
 
 
-class Word(BaseModel):
+class WordS(BaseModel):
     word: str
     frequency: float
     font_size: int
@@ -12,4 +12,4 @@ class Word(BaseModel):
 
 
 class WordCloudS(BaseModel):
-    words: List[Word]
+    words: List[WordS]
