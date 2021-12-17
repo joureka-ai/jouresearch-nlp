@@ -79,6 +79,13 @@ def generate_topics(
 
     df = get_df_topics(model)
 
+    try:
+        # For a low number of documents - flagged by "enhY" - the often duplicated topics are created
+        if "enhY" in str(model_in_path) or str(model_out_path):
+            df.drop_duplicates(subset="Words", keep="last")
+    except:
+        pass
+
     if model_out_path and not model_existed:
         save_model(model, model_out_path)
 

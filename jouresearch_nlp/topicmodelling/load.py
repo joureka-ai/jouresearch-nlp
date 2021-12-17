@@ -9,6 +9,7 @@ def check_modelpath(path: Path) -> bool:
 
 
 def load_model(mode: str, top_n_words=3, model_path: Optional[str] = None):
+    """ Load the model from a path."""
 
     # Better speed but worse quality as the SentenceTransformer embeddings
     if not model_path or not check_modelpath(model_path):
