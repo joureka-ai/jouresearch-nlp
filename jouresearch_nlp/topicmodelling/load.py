@@ -4,6 +4,7 @@ from pathlib import Path
 
 
 def check_modelpath(path: Path) -> bool:
+    path = Path(path)
     return path.is_file()
 
 
