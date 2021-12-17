@@ -71,13 +71,7 @@ def generate_topics(
 ):
     # TODO: refactor into a class
     if not model:
-        model = load_model(mode, top_n_words, model_in_path)
-        model_existed = False
-
-    else:
-        # tmp boolean for deriving if the model already exists or
-        # needs to be stored
-        model_existed = True
+        model, model_existed = load_model(mode, top_n_words, model_in_path)
 
     docs_wo_sw = remove_stopwords(docs)
 

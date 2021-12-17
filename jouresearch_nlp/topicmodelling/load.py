@@ -28,8 +28,10 @@ def load_model(mode: str, top_n_words=3, model_path: Optional[str] = None):
                 top_n_words=top_n_words,
                 embedding_model=nlp,
             )
+        model_existed = False
 
     else:
         model = BERTopic.load(model_path)
+        model_existed = True
 
-    return model
+    return model, model_existed
