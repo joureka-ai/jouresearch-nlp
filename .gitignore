@@ -129,3 +129,6 @@ dmypy.json
 
 # Jupyter Notebooks
 #*.ipynb
+
+# ignore all build NLP models
+models/
