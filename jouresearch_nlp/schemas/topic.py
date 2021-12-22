@@ -4,7 +4,7 @@ from typing import List
 
 class Word(BaseModel):
     word: str
-    freq: float
+    frequency: float
 
 
 class Topic(BaseModel):

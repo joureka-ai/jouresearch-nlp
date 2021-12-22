@@ -69,7 +69,7 @@ def tm_parser(df: DataFrame, model: BERTopic) -> Topics:
 
         t_word = []
         for word in words:
-            t_w = Word(word=word, freq=freq_dict[word])
+            t_w = Word(word=word, frequency=freq_dict[word])
             t_word.append(t_w)
 
         topic = Topic(
