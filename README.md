@@ -8,9 +8,9 @@
 
    1.2. [Option 2](#option-2)
 
-2. [Generation of Statistical Analysis](#)
+2. [Generation of NamedEntities](#generation-of-namedentities)
 
-3. [Generation of Topics](#)
+3. [Generation of Topics](#generation-of-topics)
 
 ## Generation of WordCloud
 
@@ -85,7 +85,45 @@ WordCloudS(words=[Word(word='wertvoll', frequency=1.0, font_size=57, position=(1
 ..])
 ```
 
-## Generation of Statistical Analysis
+## Generation of NamedEntities
+
+### Get the entities with entity frequency of several documents
+
+The naming of entities is powered by the [spaCy EntitiyRecognizer capability](https://spacy.io/api/entityrecognizer).
+
+What the algorithm aims to provide is all recognized entities with their frequency and the originating recordings. The frequency is here the allover frequency of that term in that its label.
+What is meant by that? The Entity Recognizer may classify the entity St. Moritz as location and person. In that case, the entities frequency is counted for the label of location and for the labe of person - seperated from each other.
+
+A ready-to-use example case:
+
+```python
+
+import json
+from jouresearch_nlp.ner.aggregate import aggregate_entys_w_freqs
+
+
+with open("../data/examples/ner_text.json", encoding='utf-8') as file:
+    data = json.load(file)
+
+
+get_entities_w_freqs(data)
+```
+
+The output format is like this:
+
+```python
+
+NamedEntities(entities=[
+
+   EntityLabel(label='LOC', entities=[Entity(name='sächsische Justizministerium', frequency=1, recordings=[1]), Entity(name='Landgericht Chemnitz', frequency=2, recordings=[1]), Entity(name='Leipzig-Connewitz', frequency=1, recordings=[1]),
+
+    EntityLabel(label='PER', entities=[Entity(name='Brian E.', frequency=2, recordings=[1]), Entity(name='Matthias B.', frequency=2, recordings=[1]), Entity(name='B.s Mitreferendaren', frequency=1, recordings=[1]), Entity(name='Justwatch', frequency=3, recordings=[3]),
+
+   EntityLabel(label='MISC', entities=[Entity(name='Leipziger', frequency=1, recordings=[1]), Entity(name='sächsische', frequency=1, recordings=[1]), Entity(name='ZEIT', frequency=1, recordings=[1]), Entity(name='Ein Neonazi', frequency=1, recordings=[1]), Entity(name='sächsischen', frequency=1, recordings=[1]), Entity(name='Sondersitzung der Länderkammer', frequency=1, recordings=[2]),
+
+    EntityLabel(label='ORG', entities=[Entity(name='NPD', frequency=1, recordings=[1]), Entity(name='Neonazi-Kameradschaft Freies Netz Süd', frequency=1, recordings=[1]), Entity(name='Bundestag', frequency=2, recordings=[2]), Entity(name='FDP', frequency=1, recordings=[2])])])
+
+```
 
 ## Generation of Topics
 
