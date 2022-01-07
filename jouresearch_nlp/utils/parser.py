@@ -4,7 +4,7 @@ from spacy.tokens import Token, Doc
 from typing import List, Any
 from jouresearch_nlp.schemas import WordCloudS, WordS
 from pandas import DataFrame
-from ..schemas import Topics, Topic, Word
+from ..schemas import Topics, Topic, Word, NamedEntities, EntityLabel, Entity
 
 
 def tokenizer(text: str) -> Doc:
@@ -82,3 +82,23 @@ def tm_parser(df: DataFrame, model: BERTopic) -> Topics:
         topics.append(topic)
 
     return Topics(topics=topics)
+
+
+def ner_parser(freq_entities: dict) -> NamedEntities:
+
+    entities = []
+    for label in freq_entities:
+        entities_of_label = []
+
+        for entity in freq_entities[label]:
+            entities_of_label.append(
+                Entity(
+                    name=entity,
+                    frequency=freq_entities[label][entity]["frequency"],
+                    recordings=freq_entities[label][entity]["recordings"],
+                )
+            )
+
+        entities.append(EntityLabel(label=label, entities=entities_of_label))
+
+    return NamedEntities(labelled_entities=entities)
