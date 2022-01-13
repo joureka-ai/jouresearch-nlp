@@ -3,6 +3,7 @@ from typing import List
 from jouresearch_nlp.utils import nlp
 from jouresearch_nlp.utils.parser import ner_parser
 from jouresearch_nlp.schemas.document import Document
+import numpy as np
 
 
 def get_entities(doc: Document):
@@ -82,11 +83,34 @@ def get_frequency_in_doc(entities_by_label, label, doc_id, freq_entities):
             freq_entities[label][entity]["recordings"].append(doc_id)
 
 
-def get_entities_w_freqs(docs: Document):
+def validate_by_percentile(freq_entities: dict, percentile: int) -> int:
+    # validate by 75 % percentile
+
+    c_freq_entities = freq_entities.copy()
+
+    for label in list(freq_entities.keys()):
+
+        frequencies = [
+            freq_entities[label][f_ent]["frequency"] for f_ent in freq_entities[label]
+        ]
+
+        percentile = round(np.percentile(frequencies, percentile))
+
+        for f_ent in list(freq_entities[label].keys()):
+            if freq_entities[label][f_ent]["frequency"] < int(percentile):
+                # Only take those entities that are in the top 25 percentile
+                c_freq_entities[label].pop(f_ent)
+
+    return c_freq_entities
+
+
+def get_entities_w_freqs(docs: Document, percentile):
     """First, aggregate the entities of all given documents. Second, calculate the frequency of each entity (in respect to each label).
     And last, parse the data from python dictonary to pydantic data model for validation."""
     docs_entities = aggregate_entities_over_docs(docs)
 
     freq_entities = calculate_frequencies_over_docs(docs_entities)
 
-    return ner_parser(freq_entities)
+    val_freq_entities = validate_by_percentile(freq_entities, percentile)
+
+    return ner_parser(val_freq_entities)
