@@ -1,8 +1,9 @@
-from typing import List
+from typing import List, Optional
 
 from jouresearch_nlp.utils import nlp
 from jouresearch_nlp.utils.parser import ner_parser
 from jouresearch_nlp.schemas.document import Document
+from jouresearch_nlp.schemas.entity import NamedEntities
 import numpy as np
 
 
@@ -86,8 +87,6 @@ def get_frequency_in_doc(entities_by_label, label, doc_id, freq_entities):
 def validate_by_percentile(freq_entities: dict, percentile: int) -> int:
     # validate by 75 % percentile
 
-    c_freq_entities = freq_entities.copy()
-
     for label in list(freq_entities.keys()):
 
         frequencies = [
@@ -96,21 +95,26 @@ def validate_by_percentile(freq_entities: dict, percentile: int) -> int:
 
         percentile = round(np.percentile(frequencies, percentile))
 
+        # print(label)
+        # print(percentile)
+
         for f_ent in list(freq_entities[label].keys()):
-            if freq_entities[label][f_ent]["frequency"] < int(percentile):
+            if freq_entities[label][f_ent]["frequency"] <= percentile:
                 # Only take those entities that are in the top 25 percentile
-                c_freq_entities[label].pop(f_ent)
+                freq_entities[label].pop(f_ent)
 
-    return c_freq_entities
+    return freq_entities
 
 
-def get_entities_w_freqs(docs: Document, percentile):
+def get_entities_w_freqs(docs: Document, percentile: int) -> NamedEntities:
     """First, aggregate the entities of all given documents. Second, calculate the frequency of each entity (in respect to each label).
     And last, parse the data from python dictonary to pydantic data model for validation."""
     docs_entities = aggregate_entities_over_docs(docs)
 
     freq_entities = calculate_frequencies_over_docs(docs_entities)
 
-    val_freq_entities = validate_by_percentile(freq_entities, percentile)
+    if percentile:
+        val_freq_entities = validate_by_percentile(freq_entities, percentile)
+        return ner_parser(val_freq_entities)
 
-    return ner_parser(val_freq_entities)
+    return ner_parser(freq_entities)
