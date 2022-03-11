@@ -38,7 +38,7 @@ docs = [{
 ]
 
 
-freq_list = calculate_freq_over_docs(docs=docs, wc_threshold=50, lang=Language.de_DE)
+freq_list = calculate_freq_over_docs(docs=docs, wc_threshold=50, language="de-DE")
 freq_list
 ```
 
