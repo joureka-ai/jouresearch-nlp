@@ -23,6 +23,7 @@ The use case here is for collections that are working with document entities. Th
 A ready-to-use example case:
 
 ```python
+from jouresearch_nlp.utils import Language
 from jouresearch_nlp.wordcloud.frequency import calculate_freq_over_docs
 
 
@@ -37,7 +38,7 @@ docs = [{
 ]
 
 
-freq_list = calculate_freq_over_docs(docs=docs, wc_threshold=50)
+freq_list = calculate_freq_over_docs(docs=docs, wc_threshold=50, lang=Language.de_DE)
 freq_list
 ```
 

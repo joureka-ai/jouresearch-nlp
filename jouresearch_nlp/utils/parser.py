@@ -1,14 +1,17 @@
-from . import nlp
+from . import nlp, language_to_nlp, Language
 from ..topicmodelling import BERTopic
 from spacy.tokens import Token, Doc
-from typing import List, Any
+from typing import List, Any, Optional
 from jouresearch_nlp.schemas import WordCloudS, WordS
 from pandas import DataFrame
 from ..schemas import Topics, Topic, Word, NamedEntities, EntityLabel, Entity
 
 
-def tokenizer(text: str) -> Doc:
+def tokenizer(text: str, lang: Optional[Language] = Language.de_DE) -> Doc:
     """Takes a text as plain string and returns a list of SpaCy Doc."""
+
+    nlp = language_to_nlp[lang]
+
     return [token for token in nlp(text)]
 
 
