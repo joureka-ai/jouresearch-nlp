@@ -1,4 +1,4 @@
-from . import nlp, language_to_nlp, Language
+from .constants import language_to_nlp, Language
 from ..topicmodelling import BERTopic
 from spacy.tokens import Token, Doc
 from typing import List, Any, Optional

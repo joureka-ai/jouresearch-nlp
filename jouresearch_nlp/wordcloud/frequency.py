@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from jouresearch_nlp.utils.parser import lemma, tokenizer
 from jouresearch_nlp.schemas.document import Document
-from jouresearch_nlp.utils import Language
+from jouresearch_nlp.utils.constants import Language
 
 from spacy.tokens import Token
 
