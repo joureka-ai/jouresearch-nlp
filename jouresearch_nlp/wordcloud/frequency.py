@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from jouresearch_nlp.utils.parser import lemma, tokenizer
 from jouresearch_nlp.schemas.document import Document
-from jouresearch_nlp.utils.constants import Language
+from jouresearch_nlp.utils.constants import Language, lang_tag_to_enum
 
 from spacy.tokens import Token
 
@@ -50,9 +50,14 @@ def add_freq_over_docs(
 
 
 def calculate_freq_over_docs(
-    docs: Document, wc_threshold: int, lang: Optional[Language] = Language.de_DE
+    docs: Document, wc_threshold: int, language: Optional[str] = "de-DE"
 ) -> List:
     """Takes a list of documents and calculates the frequency get_freq_dict function."""
+
+    lang = lang_tag_to_enum[language]
+
+    assert lang
+
     freq_dict = None
     for doc in docs:
 

@@ -12,6 +12,14 @@ class Language(enum.Enum):
     es_US = "es-US"
 
 
+lang_tag_to_enum = {
+    "de-DE": Language.de_DE,
+    "en-GB": Language.en_GB,
+    "en-US": Language.en_US,
+    "es-ES": Language.es_ES,
+    "es-US": Language.es_US,
+}
+
 language_to_regconfig = {
     Language.de_DE: "german",
     Language.en_GB: "english",
