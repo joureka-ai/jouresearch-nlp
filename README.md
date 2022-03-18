@@ -109,7 +109,7 @@ with open("../data/examples/ner_text.json", encoding='utf-8') as file:
 
 # Define a percentile to validate the entities by occurence of frequency.
 # With a percentile of 75 you will only retrieve the entities that are as freqquent as the 25 % of the entities that occur the most often.
-get_entities_w_freqs(docs=data, percentile=0)
+get_entities_w_freqs(docs=data, percentile=0, language="de-DE")
 ```
 
 The output format is like this:

@@ -7,10 +7,15 @@ from pandas import DataFrame
 from ..schemas import Topics, Topic, Word, NamedEntities, EntityLabel, Entity
 
 
+def get_nlp(lang: Optional[Language] = Language.de_DE) -> Doc:
+    """Takes a text as plain string and returns a list of SpaCy Doc."""
+    return language_to_nlp[lang]
+
+
 def tokenizer(text: str, lang: Optional[Language] = Language.de_DE) -> Doc:
     """Takes a text as plain string and returns a list of SpaCy Doc."""
 
-    nlp = language_to_nlp[lang]
+    nlp = get_nlp(lang)
 
     return [token for token in nlp(text)]
 

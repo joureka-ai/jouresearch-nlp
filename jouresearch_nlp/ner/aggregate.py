@@ -1,14 +1,19 @@
 from typing import List, Optional
 
-from jouresearch_nlp.utils import nlp
-from jouresearch_nlp.utils.parser import ner_parser
+from jouresearch_nlp.utils.constants import lang_tag_to_enum
+from jouresearch_nlp.utils.parser import ner_parser, get_nlp
 from jouresearch_nlp.schemas.document import Document
 from jouresearch_nlp.schemas.entity import NamedEntities
 import numpy as np
 
 
-def get_entities(doc: Document):
+def get_entities(doc: Document, language: Optional[str] = "de-DE"):
     """Extract the entities of a single document seperated into label and the actual entity."""
+
+    # get the spacy pipeline for either german, english or spanish
+    lang = lang_tag_to_enum[language]
+    nlp = get_nlp(lang)
+
     doc = nlp(doc["text"])
     doc_dict = doc.to_json()
 
@@ -33,13 +38,15 @@ def sort_by_label(labels_dicts: dict, entities: List[str], doc_id: int) -> dict:
     return entities_by_label
 
 
-def aggregate_entities_over_docs(docs: Document) -> dict:
+def aggregate_entities_over_docs(
+    docs: Document, language: Optional[str] = "de-DE"
+) -> dict:
     """Join the entities of all documents into a single dictionary."""
 
     docs_entities = {}
     for doc in docs:
 
-        labels_of_entities, entities = get_entities(doc)
+        labels_of_entities, entities = get_entities(doc, language)
 
         entities_by_label = sort_by_label(labels_of_entities, entities, doc["id"])
 
@@ -106,10 +113,12 @@ def validate_by_percentile(freq_entities: dict, percentile: int) -> int:
     return freq_entities
 
 
-def get_entities_w_freqs(docs: Document, percentile: int) -> NamedEntities:
+def get_entities_w_freqs(
+    docs: Document, percentile: int, language: Optional[str] = "de-DE"
+) -> NamedEntities:
     """First, aggregate the entities of all given documents. Second, calculate the frequency of each entity (in respect to each label).
     And last, parse the data from python dictonary to pydantic data model for validation."""
-    docs_entities = aggregate_entities_over_docs(docs)
+    docs_entities = aggregate_entities_over_docs(docs, language)
 
     freq_entities = calculate_frequencies_over_docs(docs_entities)
 
