@@ -13,7 +13,10 @@ from ..utils.parser import remove_stopwords, tm_parser
 
 
 def get_df_topics(
-    topic_model: BERTopic, topics: List[int] = None, top_n_topics: int = None
+    topic_model: BERTopic,
+    topics: List[int] = None,
+    top_n_topics: int = None,
+    top_n_words: int = None,
 ) -> DataFrame:
     """
 
@@ -34,7 +37,7 @@ def get_df_topics(
     topic_list = sorted(topics)
     frequencies = [topic_model.topic_sizes[topic] for topic in topic_list]
     words = [
-        " | ".join([word[0] for word in topic_model.get_topic(topic)[:5]])
+        " | ".join([word[0] for word in topic_model.get_topic(topic)[:top_n_words]])
         for topic in topic_list
     ]
 
@@ -77,7 +80,7 @@ def generate_topics(
 
     topics, _ = model.fit_transform(docs_wo_sw)
 
-    df = get_df_topics(model)
+    df = get_df_topics(topic_model=model, top_n_words=top_n_words)
 
     try:
         # For a low number of documents - flagged by "enhY" - the often duplicated topics are created
