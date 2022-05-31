@@ -71,10 +71,11 @@ def generate_topics(
     model: Optional[Path] = None,
     model_in_path: Optional[Path] = None,
     model_out_path: Optional[Path] = None,
+    language: Optional[str] = "german",
 ):
     # TODO: refactor into a class
     if not model:
-        model, model_existed = load_model(mode, top_n_words, model_in_path)
+        model, model_existed = load_model(mode, top_n_words, model_in_path, language)
 
     docs_wo_sw = remove_stopwords(docs)
 
